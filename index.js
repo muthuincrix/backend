@@ -34,7 +34,9 @@ app.get("/error",(req,res) => {
   res.sendFile(path.join(__dirname, "./public/build", "index.html"));
 })
 
-
+app.use("/",(req,res,next) => {
+  res.redirect('/error');
+})
 app.listen(1338, () => {
   console.log("listening on 1338");
 });
