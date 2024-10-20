@@ -16,8 +16,8 @@ exports.checkIsValid = (req, res, next) => {
 
 exports.isLogin = (req,res,next) =>{
   try { 
-    if (!req.session.isAuth || req.session.isAuth == undefined) next()
-    res.redirect('/') 
+    if (!req.session.isAuth || req.session.isAuth == undefined) return next()
+  return res.redirect('/') 
   } catch (error) {
     res.status(error.status).json({ status:"error", message: error.message})
 }
@@ -25,8 +25,8 @@ exports.isLogin = (req,res,next) =>{
 
 exports.isAuth = (req,res,next) =>{
   try { 
-    if (req.session.isAuth) next()
-    res.redirect('/signin') 
+    if (req.session.isAuth) return next()
+   return res.redirect('/signin') 
   } catch (error) {
     res.status(error.status).json({ status:"error", message: error.message})
 }
