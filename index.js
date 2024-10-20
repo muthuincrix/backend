@@ -4,7 +4,7 @@ const cors = require("cors");
 const app = express();
 const connectDB = require("./db");
 // connect database
-
+const path = require("path");
 const { sessionManagement } = require("./utils/sessionConnection.js");
 const router = require("./router/route.js");
 const { checkIsValid } = require("./middleware.js");
@@ -19,24 +19,22 @@ sessionManagement(app);
 
 app.use("/api", checkIsValid, router);
 
-// app.get("/isValid", (req, res) => {
-//   try {
-//     if (!req.session.isAuth || req.session.isAuth == undefined)
-//       return res.status(401).json({
-//         status: "error",
-//         message: "Not authenticated",
-//       });
-//     res.json({ status: "success", message: "You have authentication" });
-//   } catch (error) {
-//     res
-//       .status(404)
-//       .send({ status: "error", message: "API is working properly" });
-//   }
-// });
-app.get("/", (req, res) => {
-  req.session.name = "react2";
-  res.json({ success: "success" });
-});
+app.use("/", express.static(path.join(__dirname, "./public/build")));
+app.get("/",(req,res) => {
+  res.sendFile(path.join(__dirname, "./public/build", "index.html"));
+})
+app.get("/signin",(req,res) => {
+  res.sendFile(path.join(__dirname, "./public/build", "index.html"));
+})
+
+app.get("/signup",(req,res) => {
+  res.sendFile(path.join(__dirname, "./public/build", "index.html"));
+})
+app.get("/error",(req,res) => {
+  res.sendFile(path.join(__dirname, "./public/build", "index.html"));
+})
+
+
 app.listen(1338, () => {
   console.log("listening on 1338");
 });
